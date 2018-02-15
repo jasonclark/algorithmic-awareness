@@ -1,6 +1,8 @@
 # algorithmic-awareness
 Home for the IMLS Grant RE-72-17-0103-17 - [“RE:Search” - Unpacking the Algorithms That Shape Our UX](https://www.imls.gov/grants/awarded/re-72-17-0103-17). Deliverables include a teaching curriculum, syllabus, and a software prototype that demonstrates algorithms in action. 
 
+Watch our issues to see how you might contribute - (https://github.com/jasonclark/algorithmic-awareness/issues)
+
 The Montana State University Library has received funding from the Institute of Museum and Library
 Services through a Laura Bush 21st Century Librarian Program planning grant under the National Digital
 Platform category to conduct an environmental scan of the field’s knowledge of algorithms, develop a proof of
