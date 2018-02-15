@@ -1,0 +1,20 @@
+# humanstxt.org
+# The humans responsible & technology colophon
+
+/* AUTHOR  */
+  Web developer and designer: Jason A. Clark
+  Site: www.jasonclark.info
+  Twitter: @jaclark
+  Location: Bozeman, Montana, USA
+
+/* SITE */
+  Language: English
+  Last update: 2016-10-12
+  Doctype: HTML5
+  Standards: HTML5, CSS3
+  Components: CSS3, HTML5, Javascript, PHP, Python, Apache Server Configs, and CLI
+  IDE: Vi
+  Source: https://github.com/jasonclark/search-ux
+
+/* THANKS */
+  Mi familia!

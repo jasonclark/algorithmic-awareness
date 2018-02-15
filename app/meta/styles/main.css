@@ -1,0 +1,54 @@
+@charset "UTF-8";
+html {box-sizing:border-box;font-family:'Open sans',sans-serif;font-size:100%;line-height:1.7rem;}
+*, *:before, *:after {box-sizing:inherit;}
+body {color:#333;margin:0;padding:0;}
+a {font-weight:700;text-decoration:none;}
+a:link, a:visited {color:#207cca;}
+a:hover,a:focus,a:active {outline:0;text-decoration:underline;}
+h1 {font-size:1.5em;margin:0 0 1rem 0;padding:0;}
+h1 + p {margin-top:0;}
+ul {list-style:none;margin:0;padding-left:0;}
+ul > :first-child {margin-top:0;}
+ul > :last-child {margin-bottom:0;}
+li {margin:1rem 0;}
+input {border-radius:4px;outline:none;}
+::-webkit-input-placeholder {color:#333;}
+:-moz-placeholder {color:#333;}
+::-moz-placeholder {color:#333;}
+:-ms-input-placeholder {color:#333;}
+:focus::-webkit-input-placeholder {color:transparent;}
+:focus:-moz-placeholder {color:transparent;}
+:focus::-moz-placeholder {color:transparent;}
+:focus:-ms-input-placeholder {color:transparent;}
+.search {background:#eff1f3;border:1px solid #d8d8d8;padding:8px 15px;width:70%;}
+.search:focus {border:1px solid #207cca;}
+.button {background-color:#207cca;border:1px solid #207cca;color:#fafafa;/*left:-8px;*/padding:8px 15px;/*position:relative;*/}
+.button:hover {background-color:#fafafa;color:#207cca;}
+.info {display:flex;flex-direction:column;align-items:flex-end;}
+.links {display:flex;flex-direction:column;}
+.pages {margin:.625em 0 0 0;padding:0;}
+.pages li {display:inline;margin:0 1rem;}
+.pages > :first-child {margin-left:0;}
+.pages > :last-child {margin-right:0;}
+.previous,.next {padding:.25rem .5rem;border:1px solid #207cca;border-radius:.25rem;font-size:.8em;}
+.previous:before {content: "\000AB\ ";}
+.next:after {content:" \000BB\ ";}
+.result {overflow-wrap:break-word;word-wrap:break-word;-ms-word-break:break-all;word-break:break-all;word-break:break-word;-ms-hyphens:auto;-moz-hyphens:auto;-webkit-hyphens:auto;hyphens:auto;}
+.sort {margin:0;font-size:.8125rem;}
+.terms a:after { content: ", "; }
+.terms a:last-child:after { content: ""; }
+/* mobile first, smaller screen styles */
+.flexbox {display:flex;flex-direction:column;}
+.fullheight {min-height:100vh;}
+.fullwidth {padding-right:0;padding-left:0;}
+.flex-search {}
+.flex-facet {background: #eff1f3;border-top:1px solid #d8d8d8;}
+/* make direct descendents display as columns */
+.flexbox > div {width:100%;padding:1.5rem;display:flex;flex-direction:column;flex:1;/*shorthand for flex-grow: 1;flex-shrink: 1;flex-basis: auto;*/}
+.flexbox > div:first-child {margin-right:20px;}
+/* larger screen styles (above 48em) */
+@media all and (min-width:48em) {
+        .flexbox {flex-direction:row;}
+        .flexbox > div {width:50%;}
+        .flex-facet {border-left:1px solid #d8d8d8;border-top:0 none;}
+}

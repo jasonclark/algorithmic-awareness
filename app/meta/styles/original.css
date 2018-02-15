@@ -1,0 +1,76 @@
+@charset "UTF-8";
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+body {
+  font-family: 'Open sans', sans-serif;
+  font-size: 100%;
+  line-height: 1.5;
+}
+* {
+   box-sizing: border-box;
+}
+.l-grid-half {
+  width: 50%;
+}
+/* No flexbox layout with position relative and a minimum height */
+.no-flexbox .flex-split {
+	position:relative;
+	min-height:80vh;
+}
+
+/* stacked column below 48em */
+.flexbox .flex-split {
+	display:flex;
+	flex-direction:column;
+}
+
+/*
+ * 	For no flexbox - give the child elements a minimum height and position them top and bottom
+ * 		at 48ems make them float, otherwise just let the content fill the blocks on a small screen
+ * 		*/
+
+@media all and (min-width:48em) {
+/* split screen above 48em */
+        .flexbox .flex-split {
+                flex-direction: row;
+        }
+	/* Common to both */
+	.flex-split > div {
+		width:50%;
+	}
+	.no-flexbox .flex-split > div {
+		min-height:50vh;
+		top:0;
+		bottom:0;
+		float:left;
+		position:absolute;
+
+
+	}
+	/* Anchor to their respective sides	 */
+	.no-flexbox .flex-split-left {
+		left:0;
+	}
+	.no-flexbox .flex-split-right {
+		right:0;
+	}
+
+}
+
+/* For Flexbox - make the direct descendant divs content displayed in columns */
+.flexbox .flex-split > div {
+
+	display:flex;
+	flex-direction:column;
+
+
+}
+
+/* Use flexbox to vertically center align */
+.flex-split > div {
+
+	justify-content:center;
+		/* I needed to do this in IE10/11 to get it to horizontally center */
+	align-items:center;
+
+
+}
