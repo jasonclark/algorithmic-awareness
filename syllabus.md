@@ -16,7 +16,7 @@ Friday 11 am to 12pm CST</td>
 
 ### COURSE DESCRIPTION
 
-During this course, we will examine what it means to build and design for the mobile platform and how these practices can inform standard web development and design practices. Our emphasis will be on the creation of a working mobile web sketch or app and a series of readings to ground our understanding of what it means to design and develop for mobile settings.
+During this course, we will examine what it means to build, design, and understand the UX of algorithms inside of common software.
 
 ### COURSE OBJECTIVES
 
