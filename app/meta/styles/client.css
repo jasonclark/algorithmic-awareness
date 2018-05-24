@@ -1,0 +1,31 @@
+.results {
+	display: none;
+}
+
+.results.none {
+	display: block;
+}
+
+.results.none .results-returned {
+	display: none;
+}
+
+.results.returned {
+	display: block;
+}
+
+.results.returned .results-none {
+	display: none;
+}
+
+#facets .hidden {
+	display: none;
+}
+
+#facets.naturallanguage > .facet-naturallanguage,
+#facets.many > .facet-many,
+#facets.none > .facet-none,
+#facets.categories > .facet-categories,
+#facets.offer > .facet-offer {
+	display: block;
+}
