@@ -16,6 +16,16 @@ function displaySearchResults() {
 	var ul = document.querySelector("ul.result");
 	ul.innerHTML = "";
 	
+	// Show info about results
+	var resultinfo = document.getElementById("result-info");
+	resultinfo.innerHTML = "<strong>" + results.queries.request[0].searchTerms + "</strong> (About " + results.queries.request[0].totalResults + ")";
+	
+	// Show current search category (facet)
+	var sortcategory = document.getElementById("sort-category");
+	if ("hq" in results.queries.request[0]) {
+		sortcategory.innerHTML = "Category: " + results.queries.request[0].hq;
+	}
+	
 	// Build the results links
 	for (var result in results.items) {
 		var item = document.createElement("li");
@@ -36,7 +46,7 @@ function displaySearchResults() {
 			link.href = "#";
 			link.addEventListener("click", function(e) {
 				e.preventDefault();
-				getSearchResults(pageRef[0].searchTerms, 10, pageRef[0].startIndex, null, null);
+				getSearchResults(pageRef[0].searchTerms, 10, pageRef[0].startIndex, null, pageRef[0].hq);
 			});
 			link.innerText = text;
 			page.appendChild(link);
@@ -75,26 +85,31 @@ function displaySearchResults() {
 	} else {
 		facets.classList.add("categories");
 		
+		// Create list of categories to narrow down the search
 		var searchFacets = results.context.facets;
 		var terms = document.querySelector(".facet-categories p.terms");
 		terms.innerHTML = "";
 		
+		// The first "all" category
 		var link = document.createElement("a");
 		link.href = "#";
 		link.addEventListener("click", function(e) {
 			e.preventDefault();
-			getSearchResults(results.queries.request[0].searchTerms, 10, results.queries.request[0].startIndex, null, null);
+			getSearchResults(results.queries.request[0].searchTerms, 10, 1, null, null);
 		});
 		link.innerText = "All";
 		terms.appendChild(link);
 		
+		// Iterate over remaining categories
 		for (var f in searchFacets) {
 			var link = document.createElement("a");
 			link.href = "#";
-			link.addEventListener("click", function(e) {
-				e.preventDefault();
-				getSearchResults(results.queries.request[0].searchTerms, 10, results.queries.request[0].startIndex, null, searchFacets[f][0].anchor);
-			});
+			(function(category){
+				link.addEventListener("click", function(e) {
+					e.preventDefault();
+					getSearchResults(results.queries.request[0].searchTerms, 10, 1, null, category);
+				});
+			})(searchFacets[f][0].anchor);
 			link.innerText = searchFacets[f][0].anchor;
 			terms.appendChild(link);
 		}
@@ -108,9 +123,89 @@ function detectNaturalLanguage(q) {
 	return cueWords.includes(q.split(" ", 1)[0]);
 }
 
+function researchOffer() {
+	var today = new Date();
+	// Note: avoid date ranges that include the new year
+	var ranges = [
+		{
+			start: [10, 1], // MM, DD
+			end: [12, 18],
+			message: 'It is that time of the year. The days are shorter and research papers are happening. Get started by <a href="http://ask.lib.montana.edu/ask">talking to a Librarian</a>.'
+		},
+		{
+			start: [3, 1],
+			end: [5, 18],
+			message: 'It is that time of the year. Spring fever is almost here, but you have a research paper to write. Get started by <a href="http://ask.lib.montana.edu/ask">talking to a Librarian</a>.',
+			annotation: "It's getting later in the spring semester, so since you might be needing help with research, we're giving you a link to talk with a librarian."
+		},
+		{
+			start: [5, 18],
+			end: [8, 31],
+			message: "School may be out but it's never a bad time to come in to the library. Stop in to chat with your friendly librarians today.",
+			annotation: "It's summer, and most students will be out for summer break, so we're not going to show suggestions about helping with research."
+		}
+	]
+	
+	offerElement = document.getElementById("research-offer");
+	
+	for (i in ranges) {
+		startDate = new Date(today.getFullYear(), ranges[i].start[0] - 1, ranges[i].start[1]);
+		endDate = new Date(today.getFullYear(), ranges[i].end[0] - 1, ranges[i].end[1]);
+		if (startDate < today && today < endDate) {
+			offerElement.innerHTML = ranges[i].message;
+			annotate(offerElement, ranges[i].annotation);
+		}
+	}
+}
+
+function weatherOffer() {
+	// lat = "49.246292";
+	// lng = "-123.116226";
+	var url = "https://api.weather.gov/gridpoints/TFX/95,56";
+	var xhr = new XMLHttpRequest();
+	xhr.addEventListener("load", function() {
+		var results = JSON.parse(this.responseText);
+		cloudCover = results.properties.skyCover.values[0].value;
+		message = '<p>Here comes the sun, stop in for a cup of something cool. Check out the <a href="http://www.montana.edu/ufs/menus/brewed_awakening.php">"Brewed Awakening" hours and menu</a>.';
+		if (cloudCover > 0.3) {
+			message = 'It\'s cloudy and cold, stop in for a cup of something warm. Check out the <a href="http://www.montana.edu/ufs/menus/brewed_awakening.php">"Brewed Awakening" hours and menu</a>.';
+		}
+		offerElement = document.getElementById("weather-offer");
+		offerElement.innerHTML = message;
+	});
+	xhr.open("GET", url);
+	xhr.send();
+}
+
+function annotate(node, annotation) {
+	node.classList.add("annotation");
+	node.setAttribute("data-annotation", annotation);
+	enableAnnotation(node);
+}
+
+function enableAnnotation(node) {
+	node.addEventListener("click", function(e) {
+		if(document.body.classList.contains("xray")) {
+			alert(e.target.attributes["data-annotation"].value);
+			e.preventDefault();
+		}
+	});
+}
+
+function addInitialAnnotations() {
+	annotations = document.getElementsByClassName("annotation");
+	
+	for(i = 0; i < annotations.length; i++) {
+		enableAnnotation(annotations[i]);
+	}
+}
+
 document.querySelector("form").addEventListener("submit", function(e) {
 	e.preventDefault();
 	var q = document.getElementById("q").value;
 	getSearchResults(q, 10, 1, null, null);
 });
 
+addInitialAnnotations();
+researchOffer();
+weatherOffer();

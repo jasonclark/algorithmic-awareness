@@ -70,55 +70,16 @@
       </div>
       <div class="results-returned">
         <p class="sort" role="toolbar" aria-label="sorting options" aria-controls="sortable">
-          <span class="sort-heading">Sort:</span> 
+          <!-- <span class="sort-heading">Sort:</span> 
           <a href="./index.html?q=<?php echo $q; ?>">Relevance</a> or <a href="./index.html?sort=date&amp;q=<?php echo $q; ?>">Date</a>
           <span class="results-facets">
-            | <span class="sort-heading">Category: 
-            <a href="./index.html?q=<?php echo $q; ?>&amp;facet=<?php echo $facet; ?>"><?php echo urldecode(ucfirst($facet)); ?></a>
-          </span>
+            | --><span id="sort-category" class="sort-heading"></span>
         </p>
-        <p class="result"><strong><?php echo '"'.urldecode($q).'"'; ?></strong> (About <?php echo $totalItems; ?> results)</p>
+        <p id="result-info" class="result"></p>
         <ul class="result" id="sortable">
-<!-- <?php
-foreach ($result['items'] as $item) {
-  $link = rawurldecode($item['link']);
-?>
-      <li>
-      <a href="<?php echo $link; ?>"><?php echo $item['htmlTitle']; ?></a>
-      <br />
-      <?php echo $item['htmlFormattedUrl']; ?>
-      <?php //echo $item['htmlSnippet']; ?>
-      <?php //echo 'id: '.$sr['cacheId']; ?>
-      </li>
-<?php
-}
-?> -->
         </ul>
-<!-- <?php
-// Calculate new start value for "previous" link
-$previous = ($start > 1) ? ($start - $limit) : null;
-$previous = (!is_null($previous) && ($previous < 1)) ? 1 : $previous;
-
-// Calculate new start value for "next" link
-$next = (($start + $limit) <= $totalItems) ? ($start + $limit) : null;
-if ($next >= 100) { $next = null; }
-  // Display previous and next links if applicable
-  if (!is_null($previous) || !is_null($next)) {
-?>-->
     <nav role="navigation" aria-label="pagination">
       <ul class="pages">
-<!--<?php
-if (!is_null($previous)) {
-?>
-        <li><a class="previous" rel="prev" href="./index.html?q=<?php echo urlencode($_GET['q']);?><?php if (!is_null($facet)) echo '&amp;facet=' . $facet;?>&amp;totalItems=<?php echo $totalItems; ?>&amp;start=<?php echo $previous; ?>">Previous</a></li>
-<?php
-}
-if (!is_null($next)) {
-?>
-        <li><a class="next" rel="next" href="./index.html?q=<?php echo urlencode($_GET['q']);?><?php if (!is_null($facet)) echo '&amp;facet=' . $facet;?>&amp;totalItems=<?php echo $totalItems; ?>&amp;start=<?php echo $next; ?>">Next</a></li>
-<?php
-}
-?> -->
       </ul>
     </nav>
       </div>
@@ -139,29 +100,6 @@ if (!is_null($next)) {
       <summary>FAQ</summary>
         <p>It looks like you have a question. We have a list of common library questions in <a href="http://ask.lib.montana.edu/">our FAQ</a> or we can <a href="http://ask.lib.montana.edu/search/?q=<?php echo $q; ?>">run your search in our knowledgebase</a>.</p>
       </details>
-<!-- <?php
-}//end check for natural language question words
-
-// Set URL for the Google Custom Search API call
-$url = "https://www.googleapis.com/customsearch/$v?key=$key&cx=$id&alt=$form".(is_null($sort) ? "" : "&sort=$sort")."&num=$limit&start=$start&prettyprint=true&q=$q".(is_null($facet) ? "" : "&hq=$facet");
-
-// Build request and send to Google Ajax Search API
-$request = file_get_contents($url);
-
-if ($request === FALSE) {
-// API call failed, display message to user
-    echo 'It looks like we can\'t communicate with the API at the moment.'."\n";
-  exit();
-}
-
-// Decode json object(s) out of response from Google Ajax Search API
-$getFacets = json_decode($request, true);
-
-// Get values in json data for number of search results returned
-$totalItems = isset($_GET['totalItems']) ?  strip_tags((int)$_GET['totalItems']) : $result['queries']['request'][0]['totalResults'];
-
-if ($totalItems &lt; 30) { 
-?> -->
       <details class="hidden facet-many">
       <summary class="annotation" data-annotation="Your search returned a lot of results. We're suggesting a couple topics that we think might help you narrow down your search.">"Hand-picked" Topics</summary>
         <p>A few common topics based on our <a href="http://www.lib.montana.edu/sitemap.html">human-created sitemap</a> and an analysis of our search logs.</p>
@@ -214,11 +152,11 @@ if ($totalItems &lt; 30) {
         }               
       </script>
       </details>
-      <details class="hidden facet-many">
+<!--       <details class="hidden facet-many">
       <summary>Popular</summary>
         <p>Here are a few of the most popular searches from our search logs. They might help.</p>
         <p class="terms">  
-<!-- <?php
+<?php
 // Set most popular search terms RDF URL
 $request = 'http://www.google.com/cse/api/010001021870615082419/cse/sgtwcccfbiq/queries?key='.$key.'&view=overall';
 // Read feed into SimpleXML object
@@ -231,117 +169,21 @@ foreach ($entries as $entry) {
         <a href="./index.html?view=search&q=<?php echo urlencode($popularTerm); ?>"><?php echo urldecode($popularTerm); ?></a>
 <?php
 }
-?> -->
+?>
         </p>
-      </details>
-<!-- <?php
-} //end conditional checking for large result sets - anything over 25 results triggers these suggestions
-
-if ($totalItems <= 0) { 
-// Empty results, display message to user
-?> -->
+      </details> -->
       <p class="hidden facet-none"><strong>Oops! There were no results.</strong> &#9785;</p>
-<!-- <?php        
-} else {
-// Make sure some results were returned, show results as html with result numbering and pagination
-?> -->
       <details class="hidden facet-categories">
       <summary>Categories</summary>
         <p class="terms">
-        <a href="./index.html?q=<?php echo urlencode($_GET['q']); ?>">All</a>
-<!-- <?php
-foreach ($getFacets['context']['facets'] as $key) {
-        echo " <a href=\"./index.html?q=" . urlencode($_GET['q']). "&amp;facet={$key[0]['label']}\">" . ucfirst($key[0]['anchor']) . "</a> ";
-}
-?> -->
         </p>
       </details>
-      <!-- <details class="hidden facet-offer" id="offer">
+      <details class="facet-offer" id="offer">
       <summary class="annotation" data-annotation="We use the current date, time, and weather to predict what kinds of things you might be looking for.">Offers</summary>
         <p>Offers based on current date and local weather.</p>
-<?php
-//show research offer by comparing current year-month-day to fall/spring year-month-day range
-$year = date("Y");
-$today = strtotime(date("Y-m-d"));
-$researchOfferFallBegin = strtotime("$year-10-1");
-$researchOfferFallEnd = strtotime("$year-12-18");
-$researchOfferSpringBegin = strtotime("$year-03-01");
-$researchOfferSpringEnd = strtotime("$year-05-18");
-
-if ($today > $researchOfferFallBegin && $today < $researchOfferFallEnd) {
-?>
-        <p>It is that time of the year. The days are shorter and research papers are happening. Get started by <a href="http://ask.lib.montana.edu/ask">talking to a Librarian</a>.</p>
-<?php
-} elseif ($today > $researchOfferSpringBegin && $today < $researchOfferSpringEnd) {
-?>
-        <p class="annotation" data-annotation="It's getting later in the spring semester, so since you might be needing help with research, we're giving you a link to talk with a librarian.">It is that time of the year. Spring fever is almost here, but you have a research paper to write. Get started by <a href="http://ask.lib.montana.edu/ask">talking to a Librarian</a>.</p>
-<?php
-} else {
-?>
-        <p>The semester is just getting started. You still have some time to read. <a href="https://www.lib.montana.edu/locations/first.html">Check out our browse collection</a>.</p>
-<?php
-} //end research offer based on date conditional
-
-//forecast.io api docs at https://developer.forecast.io/docs/v2
-//set default value for latitude
-$lat = isset($_REQUEST['lat']) ? strip_tags(floatval($_REQUEST['lat'])) : '49.246292';
-//set default value for latitude
-$lng = isset($_REQUEST['lng']) ? strip_tags(floatval($_REQUEST['lng'])) : '-123.116226';
-
-//set base url for request to forecast.io API
-$apiURL = 'https://api.forecast.io/forecast/'.$forecastKey.'/'.$lat.','.$lng.'?exclude=minutely,hourly';
-
-//for testing purposes show actual request to API - REMOVE when finished
-//echo $apiURL;
-
-//call API and get data
-$request = file_get_contents($apiURL);
-
-if ($request === FALSE) {
-  //API call failed, display message to user
-      echo 'It looks like we can\'t communicate with the API at the moment.'."\n";
-  exit();
-}
-
-//create json object(s) out of response from API; set to "true" to turn response into an array
-//$result = json_decode($request,true);
-$result = json_decode($request);
-
-if (strlen($result->latitude) > 2) {
-
-//show offer for library cafe based on location coordinates and current weather
-//dependency on skycons.js to make animated weather icons appear - https://github.com/darkskyapp/skycons
-//parse returned data elements from api call and display as html
-$summary = $result->currently->summary;
-$icon = $result->currently->icon;
-$temperature = $result->currently->temperature;
-$wind = $result->currently->windSpeed;
-$pressure = $result->currently->pressure;
-$precipProbability = $result->currently->precipProbability;
-$cloudCover = $result->currently->cloudCover;
-?>
-<?php
-if ($cloudCover > .3) {
-?>
-        <p>It's cloudy and cold, stop in for a cup of something warm. Check out the <a href="http://www.montana.edu/ufs/menus/brewed_awakening.php">"Brewed Awakening" hours and menu</a>.</p>
+        <p id="research-offer">The semester is just getting started. You still have some time to read. <a href="https://www.lib.montana.edu/locations/first.html">Check out our browse collection</a>.</p>
+        <p id="weather-offer"></p>
       </details>
-<?php
-} else {
-?>
-        <p>Here comes the sun, stop in for a cup of something cool. Check out the <a href="http://www.montana.edu/ufs/menus/brewed_awakening.php">"Brewed Awakening" hours and menu</a>.</p>
-      </details>
-<?php
-} // end suggestion based on weather
-} else {
-?>
-        <p class="subHeading">No forecast.io results for <strong><?php urldecode($q); ?></strong>.</p>
-        <p class="control"><a href="<?php echo htmlentities(strip_tags(basename(__FILE__))); ?>" class="refresh">Reset the page</a></p>
-      </details>
-<?php
-    } //end weather conditional
-  } //end conditional checking for any result sets - these are the default facets
-} //end (!is_null($q))
-?> -->
     <p>With this prototype, I'm looking at ways that the search act can be treated as a conversation.</p>
     <p class="info"><a href="about.html">What is this?</a> <a href="privacy.html">Privacy?</a></p>
   </div>
@@ -361,7 +203,7 @@ document.addEventListener("scroll", function () {
   progress.style.setProperty("--scroll", scroll + "%");
 });
 </script>
-<script>
+<!-- <script>
   annotations = document.getElementsByClassName("annotation");
   
   for(i = 0; i < annotations.length; i++) {
@@ -372,7 +214,7 @@ document.addEventListener("scroll", function () {
       }
     })
   }
-</script>
+</script> -->
 <script src="app.js"></script>
 </body>
 </html>
