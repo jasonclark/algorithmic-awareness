@@ -72,6 +72,9 @@ function displaySearchResults() {
 	// Clear existing facets
 	facets.className = "flex-facet";
 	
+	// If you have results, make offers visible
+        facets.classList.add("offer");
+
 	if (detectNaturalLanguage(results.queries.request[0].searchTerms)) {
 		facets.classList.add("naturallanguage");
 	}
