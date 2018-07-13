@@ -1,27 +1,27 @@
 Program Library();
 
-goal (food, research, testing, socializing);
+goal (ADD-YOUR-GOALS-AS-A-COMMA-SEPARATED-LIST-HERE);
 
 action {
-  if goal = food {
-    location = "coffee shop";
+  if goal = ADD-ONE-OF-YOUR-GOALS-HERE {
+    location = "ADD-A-POTENTIAL-LOCATION-FOR-GOAL-HERE";
   } else {
-    location = "vending machine"
+    location = "ADD-A-POTENTIAL-LOCATION-FOR-GOAL-HERE"
   }
-  elseif goal = research {
-    location = "reference desk";
-    methods (text, email, askQuestion)
-      if { method = "text" {
-        print("text 34455");
-      } elseif method = "email"
-        print("email asklibrary@montana.edu");
+  elseif goal = ADD-ONE-OF-YOUR-COMPLEX-GOALS-HERE {
+    location = "ADD-A-POTENTIAL-LOCATION-FOR-GOAL-HERE";
+    methods (ADD-YOUR-COMPLEX-METHODS-AS-A-COMMA-SEPARATED-LIST-HERE)
+      if { method = "ADD-ONE-OF-YOUR-METHODS-HERE" {
+        print("ADD-ONE-OF-YOUR-METHOD-RESULTS-HERE");
+      } elseif method = "ADD-ONE-OF-YOUR-METHODS-HERE"
+        print("ADD-ONE-OF-YOUR-METHOD-RESULTS-HERE");
       } else {
-        print("speak to librarian in front of you.");
+        print("ADD-YOUR-FINAL-METHOD-RESULT-HERE");
       }
-  } elseif goal = "testing" 
-    location = "Basement";
+  } elseif goal = "ADD-ONE-OF-YOUR=GOALS-HERE" 
+    location = "ADD-A-POTENTIAL-LOCATION-FOR-GOAL-HERE";
   } else {
-    location = "2nd floor"
+    location = "ADD-A-POTENTIAL-LOCATION-FOR-GOAL-HERE"
   }
 }
 
