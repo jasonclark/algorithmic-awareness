@@ -1,29 +1,27 @@
-Program Library();
+#!/usr/bin/python3
+#program the library
 
-goal (food, research, testing, socializing);
+goals = ['food', 'research', 'testing', 'socializing']
 
-action {
-  if goal = food {
-    location = "coffee shop";
-  } else {
-    location = "vending machine"
-  }
-  elseif goal = research {
-    location = "reference desk";
-    methods (text, email, askQuestion)
-      if { method = "text" {
-        print("text 34455");
-      } elseif method = "email"
-        print("email asklibrary@montana.edu");
-      } else {
-        print("speak to librarian in front of you.");
-      }
-  } elseif goal = "testing" 
-    location = "Basement";
-  } else {
-    location = "2nd floor"
-  }
-}
+def action (goals, methods):
+  if goals = 'food' :
+    location = 'coffee shop'
+  else :
+    location = 'vending machine'
+  elif goals = 'research' :
+    location = 'reference desk'
+    methods = ['text', 'email', 'askQuestion']
+      if methods = 'text' :
+        print("Text 34455")
+      elif methods = 'email' :
+        print("Email asklibrary@montana.edu")
+      else :
+        print("Speak to librarian in front of you.")
+  elif goals = 'testing' : 
+    location = 'Basement'
+  else :
+    location = '2nd floor, where the party 🎉  is!'
+  return
 
-
-Run Library();
+#run the library action function with values
+action (goals='research', methods='email')
