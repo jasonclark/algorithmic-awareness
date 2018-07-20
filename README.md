@@ -17,4 +17,4 @@ online sessions and an in-person meeting; conducting testing/evaluation of libra
 awareness of algorithms and their role in our digital experiences; and traveling for project discussion and
 dissemination. This year-long project has three phases.
 
-All module materials produced by this work are released under [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+All module materials produced by this work are released under [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/).
