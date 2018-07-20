@@ -16,3 +16,5 @@ application showing algorithms in practice; engaging with experts in the field t
 online sessions and an in-person meeting; conducting testing/evaluation of librarian and library patron’s
 awareness of algorithms and their role in our digital experiences; and traveling for project discussion and
 dissemination. This year-long project has three phases.
+
+All module materials produced by this work are released under [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
