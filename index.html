@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Search - Prototype App for "Improving Search UX using Query Analysis and Machine Cues"</title>
+<meta name="description" content="Search Application, Prototype for Digital Library Forum 2015 presentation - Is there a Ghost in the [Search] Machine? Improving Search UX using Query Analysis and Machine Cues">
+<!-- Social Media Tags -->
+<meta property="og:title" content="Search - Prototype App for Improving Search UX using Query Analysis and Machine Cues"/>
+<meta property="og:description" content="Search Application, Prototype for Digital Library Forum 2015 presentation - Is there a Ghost in the [Search] Machine? Improving Search UX using Query Analysis and Machine Cues"/>
+<meta property="og:image" content="http://www.lib.montana.edu/~jason/meta/img/clark-share-default.png"/>
+<meta property="og:url" content="http://www.lib.montana.edu/~jason/search-ux/"/>
+<meta property="og:type" content="website"/>
+<meta name="twitter:creator" property="og:site_name" content="@jaclark"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:site" content="http://www.jasonclark.info"/>
+<!-- End Social Media Tags -->
+<link rel="preconnect" href="//api.forecast.io" crossorigin/>
+<link rel="preconnect" href="//experimental.worldcat.org" crossorigin/>
+<link rel="preconnect" href="//www.google.com" crossorigin/>
+<link rel="preconnect" href="//www.googleapis.com/" crossorigin/>
+<link rel="preconnect" href="//fonts.googleapis.com" crossorigin/>
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400"/>
+<link rel="stylesheet" href="./meta/styles/main.css"/>
+<link rel="stylesheet" href="./meta/styles/client.css"/>
+<style>
+.progress {background:linear-gradient(to right, #207cca var(--scroll), transparent 0);position:fixed;width:100%;height:4px;z-index:1}
+</style>
+<!--[if IE]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<style>
+  #xraytoggle {
+    background: lightblue;
+    display: inline-block;
+    padding: 10px 20px;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+  }
+  .xray .annotation {
+    background: lightblue;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+<div id="xraytoggle" onclick="document.body.classList.toggle('xray')">X-Ray</div>
+<div class="progress" style=""></div>	
+<div class="flexbox fullheight fullwidth">
+  <div class="flex-search" role="main"> 
+    <h1>Ten Blue Links</h1>
+    <form role="search" method="get" action="">
+      <input class="search" type="text" name="q" id="q" tabindex="1" placeholder="Search stuff + things..." required />
+      <input class="button" type="submit" value="Search" />
+    </form>
+    <div class="results">
+      <div class="results-none">
+        <p><strong>Oops! There were no results.</strong> &#9785;</p>
+        <p>A few suggestions:</p>
+        <ul>
+          <li>Check your spelling.</li>
+          <li>Try more general words.</li>
+          <li>Try different words that mean the same thing.</li>
+          <li>Broaden your search by using fewer words.</li>
+          <li><a href="http://ask.lib.montana.edu/ask">Talk to a librarian</a>. &#9786;</li>
+        </ul>
+      </div>
+      <div class="results-returned">
+        <p class="sort" role="toolbar" aria-label="sorting options" aria-controls="sortable">
+          <!-- <span class="sort-heading">Sort:</span> 
+          <a href="./index.html?q=<?php echo $q; ?>">Relevance</a> or <a href="./index.html?sort=date&amp;q=<?php echo $q; ?>">Date</a>
+          <span class="results-facets">
+            | --><span id="sort-category" class="sort-heading"></span>
+	</p>
+        <p id="result-info" class="result annotation" data-annotation="These results are based on the PageRank algorithm - https://en.wikipedia.org/wiki/PageRank. PageRank is a proprietary algorithm from Google, but it has roots in the Binary Search Tree algorithm and the Term Frequency–Inverse Document Frequency (tf-idf) algorithm."></p>
+        <ul class="result" id="sortable">
+        </ul>
+    <nav role="navigation" aria-label="pagination">
+      <ul class="pages">
+      </ul>
+    </nav>
+      </div>
+    </div>
+  </div>
+    <div class="flex-facet" id="facets" role="complementary">
+      <h1>Facets</h1>
+      <p>Not seeing what you need? Watch the space below for refinements.
+      <details open class="hidden facet-naturallanguage">
+      <summary class="annotation" data-annotation="Your search began with a word which makes it seem like you phrased your search like a question. Search engines usually aren't built to answer questions, so we're offering suggestions for how the question could better be answered. In this case, we are using part-of-speech tagging (https://en.wikipedia.org/wiki/Part-of-speech_tagging) and the Hidden Markov Model (HMM). The HMM in this case sets up probablities for if a word is a part of speech.">It looks like you are asking a question.</summary>
+        <p>Do you want to <a href="http://ask.lib.montana.edu/ask">talk to a librarian</a>?</p>
+      </details>
+      <details class="hidden facet-naturallanguage">
+      <summary>Research Help</summary>
+        <p>Are you wanting to chat about research? See our <a href="http://www.lib.montana.edu/services/liaisons-by-department.html">research liasions</a> or <a href="http://www.lib.montana.edu/people/expertise.php">people by subject expertise</a>.</p>
+      </details>
+      <details class="hidden facet-naturallanguage">
+      <summary>FAQ</summary>
+        <p>It looks like you have a question. We have a list of common library questions in <a href="http://ask.lib.montana.edu/">our FAQ</a> or we can <a href="http://ask.lib.montana.edu/search/?q=<?php echo $q; ?>">run your search in our knowledgebase</a>.</p>
+      </details>
+      <details class="hidden facet-many">
+      <summary class="annotation" data-annotation="Your search returned a lot of results. We're suggesting a couple topics that we think might help you narrow down your search.">"Hand-picked" Topics</summary>
+        <p>A few common topics based on our <a href="http://www.lib.montana.edu/sitemap.html">human-created sitemap</a> and an analysis of our search logs.</p>
+        <p class="terms"><a href="index.html?q=articles+research+databases">articles & research databases</a> <a href="index.html?q=borrow">borrow</a> <a href="index.html?q=research+help">research help</a> <a href="index.html?q=library+hours">library hours</a> <a href="index.html?q=yellowstone">yellowstone</a> <a href="index.html?q=parking+directions">parking &amp; directions</a> <a href="index.html?q=montana+history">montana history</a> <a href="index.html?q=google+scholar+msu">google scholar msu</a> <a href="index.html?q=montana+code+annotated">montana code annotated</a> <a href="index.html?q=mla+format">mla format 6th edition</a></p>
+      </details>
+      <details class="hidden facet-many">
+      <summary class="annotation" data-annotation="Your search returned a lot of results. We're suggesting a couple nearby locations that you might be able to add to your search to get more local results.">Topics by Location</summary>
+        <p id="message" style="display:none"><img alt="loading" src="./meta/img/loading.gif" id="loading" /> Waiting for Godot...</p>
+        <p id="terms" class="terms"> </p>
+      <script id="worker" type="text/javascript">
+        var msg = document.getElementById("message");
+        if (navigator.geolocation) {
+          //show loading message
+          msg.style.display = 'block';
+          navigator.geolocation.getCurrentPosition(addScript);
+          console.log('geolocation done');
+        } else {
+          //error with geolocation
+          alert('Error: Your browser doesn\'t support geolocation.');
+        }
+
+        function addScript(position) {
+          //set latitude and longitude values
+          var lat = parseFloat(position.coords.latitude);
+          var lon = parseFloat(position.coords.longitude);
+          var jsonp = document.createElement('script');
+          jsonp.type = 'text/javascript';
+          jsonp.async = true;
+          jsonp.src = "https://experimental.worldcat.org/mapfast/services?geo=" + lat + "," + lon + ";crs=wgs84&radius=100000&mq=&sortby=distance&max-results=15&callback=showSubjects";
+          //document.querySelector('.terms').appendChild(script);
+          var script = document.getElementsByTagName('script')[0];
+          script.parentNode.insertBefore(jsonp, script);        
+        }
+
+        function showSubjects(data) {
+          //hide loading message
+          msg.style.display = 'none';
+          var container = document.getElementById("terms");
+          var markup = '<span>';
+          //var url = "http://www.worldcat.org/search?q=su:" + term + "&qt=advanced";
+          var url = "./index.html?&q=";
+          var i = -1;
+          var length = data.Placemark.length;
+            while (++i < length) {          
+            //for (var i = 0; i < length; i++) {
+              var cleanTerm = data.Placemark[i].name.replace(/ -- /g, " ");
+              markup += '<a title="' + data.Placemark[i].name + '" href="' + url + cleanTerm + '">' + data.Placemark[i].name + '</a>';
+            }       
+            container.innerHTML = markup + '</span> ';
+        }               
+      </script>
+      </details>
+<!--       <details class="hidden facet-many">
+      <summary>Popular</summary>
+        <p>Here are a few of the most popular searches from our search logs. They might help.</p>
+        <p class="terms">  
+<?php
+// Set most popular search terms RDF URL
+$request = 'http://www.google.com/cse/api/010001021870615082419/cse/sgtwcccfbiq/queries?key='.$key.'&view=overall';
+// Read feed into SimpleXML object
+$getPopular = simplexml_load_file($request, 'SimpleXMLIterator');
+// Set limit of 5 terms to display
+$entries = new LimitIterator($getPopular->item, 0, 5);
+foreach ($entries as $entry) {
+  $popularTerm = htmlentities($entry->title);
+?>
+        <a href="./index.html?view=search&q=<?php echo urlencode($popularTerm); ?>"><?php echo urldecode($popularTerm); ?></a>
+<?php
+}
+?>
+        </p>
+      </details> -->
+      <p class="hidden facet-none"><strong>Oops! There were no results.</strong> &#9785;</p>
+      <details class="hidden facet-categories">
+      <summary>Categories</summary>
+        <p class="terms">
+        </p>
+      </details>
+      <details class="hidden facet-offer" id="offer">
+      <summary class="annotation" data-annotation="We use the current date, time, and weather to predict what kinds of things you might be looking for.">Offers</summary>
+        <p>Offers based on current date and local weather.</p>
+        <p id="research-offer">The semester is just getting started. You still have some time to read. <a href="https://www.lib.montana.edu/locations/first.html">Check out our browse collection</a>.</p>
+        <p id="weather-offer"></p>
+      </details>
+    <p>With this prototype, I'm looking at ways that the search act can be treated as a conversation around algorithmic awareness.</p>
+    <p class="info"><a href="about.html">What is this?</a> <a href="privacy.html">Privacy?</a></p>
+  </div>
+</div>
+<script>
+//watches scroll position in window and shows progress using left to right animated bar
+//dependent on <div class="progress"> and .progress inline CSS class
+var h = document.documentElement;
+var b = document.body;
+var st = "scrollTop";
+var sh = "scrollHeight";
+var progress = document.querySelector(".progress");
+var scroll;
+document.addEventListener("scroll", function () {
+  "use strict";
+  scroll = (h[st] || b[st]) / ((h[sh] || b[sh]) - h.clientHeight) * 100;
+  progress.style.setProperty("--scroll", scroll + "%");
+});
+</script>
+<!-- <script>
+  annotations = document.getElementsByClassName("annotation");
+  
+  for(i = 0; i < annotations.length; i++) {
+    annotations[i].addEventListener("click", function(e){
+      if(document.body.classList.contains("xray")) {
+        alert(e.target.attributes["data-annotation"].value);
+        e.preventDefault();
+      }
+    })
+  }
+</script> -->
+<script src="app.js"></script>
+</body>
+</html>
