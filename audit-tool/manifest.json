@@ -1,0 +1,14 @@
+{
+  "name": "AlgoAudit",
+  "description": "Algorithmic Auditing using a set of scripts - demo",
+  "launch_path": "/index.html",
+  "icons": {
+    "512": "/img/ws512.png",
+    "128": "/img/ws128.png"
+  },
+  "developer": {
+    "name": "Jason Clark",
+    "url": "https"//jasonclark.info"
+  },
+  "default_locale": "en"
+}
