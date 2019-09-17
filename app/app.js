@@ -1,6 +1,6 @@
 function getSearchResults(q, limit, start, sort, facet) {
-	var key = "YOUR-GOOGLE-CUSTOM-SEARCH-API-KEY-HERE";
-	var id = "YOUR-GOOGLE-CUSTOM-SEARCH-ENGINE-ID-HERE";
+	var key = "AIzaSyAUnpG5xJm-07UmUrx_V1rGgUOBY5iZLvY"; 
+	var id = "010001021870615082419:c11y2dyi94c"; 
 	var url = "https://www.googleapis.com/customsearch/v1?key=" + key + "&cx=" + id + "&alt=json" + (sort == null ? "" : "&sort=" + sort) + "&num=" + limit + "&start=" + start + "&prettyprint=true&q=" + q + (facet == null ? "" : "&hq=" + facet);
 	
 	var xhr = new XMLHttpRequest();
@@ -126,6 +126,47 @@ function detectNaturalLanguage(q) {
 	return cueWords.includes(q.split(" ", 1)[0]);
 }
 
+function locationTopic() {
+	var msg = document.getElementById("message");
+        if (navigator.geolocation) {
+          //show loading message
+          msg.style.display = 'block';
+          navigator.geolocation.getCurrentPosition(addScript);
+          console.log('geolocation done');
+          msg.style.display = 'none';
+        } else {
+          //error with geolocation
+          alert('Error: Your browser doesn\'t support geolocation.');
+        }
+}
+
+function addScript(position) {
+          //set latitude and longitude values
+          var lat = parseFloat(position.coords.latitude);
+          var lon = parseFloat(position.coords.longitude);
+          var jsonp = document.createElement('script'); 
+          jsonp.type = 'text/javascript';
+          jsonp.async = true;
+          jsonp.src = "https://en.wikipedia.org/w/api.php?action=query&format=json&list=geosearch&gscoord="+lat+"%7C"+lon+"&gsradius=10000&gslimit=25&callback=showSubjects"
+	  var script = document.getElementsByTagName('script')[0]; 
+          script.parentNode.insertBefore(jsonp, script);        
+}
+
+function showSubjects(data) {
+	//hide loading message
+        var container = document.getElementById("terms");
+        var markup = '<span>';
+        var url = "./index.html?&q=";
+        var i = -1;
+        var length = data.query.geosearch.length;
+        while (++i < length) {          
+            var cleanTerm = data.query.geosearch[i].title.replace(/ -- /g, " ");
+            markup += '<a title="' + data.query.geosearch[i].title + '" href="' + url + cleanTerm + '">' + data.query.geosearch[i].title + '</a>';
+        }       
+        container.innerHTML = markup + '</span> ';
+}  
+
+
 function researchOffer() {
 	var today = new Date();
 	// Note: avoid date ranges that include the new year
@@ -169,6 +210,7 @@ function weatherOffer() {
 	xhr.addEventListener("load", function() {
 		var results = JSON.parse(this.responseText);
 		cloudCover = results.properties.skyCover.values[0].value;
+		console.log(cloudCover)
 		message = '<p>Here comes the sun, stop in for a cup of something cool. Check out the <a href="http://www.montana.edu/ufs/menus/brewed_awakening.php">"Brewed Awakening" hours and menu</a>.';
 		if (cloudCover > 0.3) {
 			message = 'It\'s cloudy and cold, stop in for a cup of something warm. Check out the <a href="http://www.montana.edu/ufs/menus/brewed_awakening.php">"Brewed Awakening" hours and menu</a>.';
@@ -210,5 +252,6 @@ document.querySelector("form").addEventListener("submit", function(e) {
 });
 
 addInitialAnnotations();
+locationTopic();
 researchOffer();
 weatherOffer();
