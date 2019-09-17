@@ -109,69 +109,7 @@
       <summary class="annotation" data-annotation="Your search returned a lot of results. We're suggesting a couple nearby locations that you might be able to add to your search to get more local results. Here we are using the geolocation coordinates provided by your web browser to find related geographic catalog terms.">Topics by Location</summary>
         <p id="message" style="display:none"><img alt="loading" src="./meta/img/loading.gif" id="loading" /> Waiting for Godot...</p>
         <p id="terms" class="terms"> </p>
-      <script id="worker" type="text/javascript">
-        var msg = document.getElementById("message");
-        if (navigator.geolocation) {
-          //show loading message
-          msg.style.display = 'block';
-          navigator.geolocation.getCurrentPosition(addScript);
-          console.log('geolocation done');
-        } else {
-          //error with geolocation
-          alert('Error: Your browser doesn\'t support geolocation.');
-        }
-
-        function addScript(position) {
-          //set latitude and longitude values
-          var lat = parseFloat(position.coords.latitude);
-          var lon = parseFloat(position.coords.longitude);
-          var jsonp = document.createElement('script');
-          jsonp.type = 'text/javascript';
-          jsonp.async = true;
-          jsonp.src = "https://experimental.worldcat.org/mapfast/services?geo=" + lat + "," + lon + ";crs=wgs84&radius=100000&mq=&sortby=distance&max-results=15&callback=showSubjects";
-          //document.querySelector('.terms').appendChild(script);
-          var script = document.getElementsByTagName('script')[0];
-          script.parentNode.insertBefore(jsonp, script);        
-        }
-
-        function showSubjects(data) {
-          //hide loading message
-          msg.style.display = 'none';
-          var container = document.getElementById("terms");
-          var markup = '<span>';
-          //var url = "http://www.worldcat.org/search?q=su:" + term + "&qt=advanced";
-          var url = "./index.html?&q=";
-          var i = -1;
-          var length = data.Placemark.length;
-            while (++i < length) {          
-            //for (var i = 0; i < length; i++) {
-              var cleanTerm = data.Placemark[i].name.replace(/ -- /g, " ");
-              markup += '<a title="' + data.Placemark[i].name + '" href="' + url + cleanTerm + '">' + data.Placemark[i].name + '</a>';
-            }       
-            container.innerHTML = markup + '</span> ';
-        }               
-      </script>
       </details>
-<!--       <details class="hidden facet-many">
-      <summary>Popular</summary>
-        <p>Here are a few of the most popular searches from our search logs. They might help.</p>
-        <p class="terms">  
-<?php
-// Set most popular search terms RDF URL
-$request = 'http://www.google.com/cse/api/010001021870615082419/cse/sgtwcccfbiq/queries?key='.$key.'&view=overall';
-// Read feed into SimpleXML object
-$getPopular = simplexml_load_file($request, 'SimpleXMLIterator');
-// Set limit of 5 terms to display
-$entries = new LimitIterator($getPopular->item, 0, 5);
-foreach ($entries as $entry) {
-  $popularTerm = htmlentities($entry->title);
-?>
-        <a href="./index.html?view=search&q=<?php echo urlencode($popularTerm); ?>"><?php echo urldecode($popularTerm); ?></a>
-<?php
-}
-?>
-        </p>
-      </details> -->
       <p class="hidden facet-none"><strong>Oops! There were no results.</strong> &#9785;</p>
       <details class="hidden facet-categories">
       <summary>Categories</summary>
@@ -185,7 +123,10 @@ foreach ($entries as $entry) {
         <p id="weather-offer"></p>
       </details>
     <p>With this prototype, I'm looking at ways that the search act can be treated as a conversation around algorithmic awareness.</p>
-    <p class="info"><a href="about.html">What is this?</a> <a href="privacy.html">Privacy?</a></p>
+    <p class="info">
+	<a href="landing.html">Home</a> 
+	<a href="about.html">What is this?</a> 
+	<a href="privacy.html">Privacy?</a></p>
   </div>
 </div>
 <script>
@@ -203,18 +144,6 @@ document.addEventListener("scroll", function () {
   progress.style.setProperty("--scroll", scroll + "%");
 });
 </script>
-<!-- <script>
-  annotations = document.getElementsByClassName("annotation");
-  
-  for(i = 0; i < annotations.length; i++) {
-    annotations[i].addEventListener("click", function(e){
-      if(document.body.classList.contains("xray")) {
-        alert(e.target.attributes["data-annotation"].value);
-        e.preventDefault();
-      }
-    })
-  }
-</script> -->
 <script src="app.js"></script>
 </body>
 </html>
