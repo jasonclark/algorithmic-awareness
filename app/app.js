@@ -1,4 +1,9 @@
 function getSearchResults(q, limit, start, sort, facet) {
+	console.log(q);
+	console.log(limit);
+	console.log(start);
+	console.log(sort);
+	console.log(facet);
 	var key = "AIzaSyAUnpG5xJm-07UmUrx_V1rGgUOBY5iZLvY"; 
 	var id = "010001021870615082419:c11y2dyi94c"; 
 	var url = "https://www.googleapis.com/customsearch/v1?key=" + key + "&cx=" + id + "&alt=json" + (sort == null ? "" : "&sort=" + sort) + "&num=" + limit + "&start=" + start + "&prettyprint=true&q=" + q + (facet == null ? "" : "&hq=" + facet);
@@ -82,7 +87,7 @@ function displaySearchResults() {
 	if (parseInt(results.searchInformation.totalResults) > 30) {
 		facets.classList.add("many");
 	}
-	
+
 	if (parseInt(results.searchInformation.totalResults) <= 0) {
 		facets.classList.add("none");
 	} else {
@@ -154,16 +159,31 @@ function addScript(position) {
 
 function showSubjects(data) {
 	//hide loading message
-        var container = document.getElementById("terms");
+        //var container = document.getElementById("terms");
+	var location = [];
+	var container = document.querySelector(".facet-many p.terms");
+	container.innerHTML = "";
         var markup = '<span>';
-        var url = "./index.html?&q=";
+        //var url = "./index.html?&q=";
         var i = -1;
         var length = data.query.geosearch.length;
         while (++i < length) {          
-            var cleanTerm = data.query.geosearch[i].title.replace(/ -- /g, " ");
-            markup += '<a title="' + data.query.geosearch[i].title + '" href="' + url + cleanTerm + '">' + data.query.geosearch[i].title + '</a>';
-        }       
-        container.innerHTML = markup + '</span> ';
+            	var link = document.createElement("a");
+		location[i] = data.query.geosearch[i].title;
+		console.log(data.query.geosearch[i].title);
+		console.log(location[i]);
+		link.href = "#";
+		(function(place){
+			link.addEventListener("click", function(e) {
+				e.preventDefault();
+				getSearchResults(place, 10, 1, null, null);
+				console.log(place);
+			});
+		})(location[i].anchor);
+		link.innerText = data.query.geosearch[i].title;
+		container.appendChild(link)
+        }    
+        //container.innerHTML = markup + '</span> ';
 }  
 
 
