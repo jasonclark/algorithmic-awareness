@@ -109,48 +109,62 @@
       <summary class="annotation" data-annotation="Your search returned a lot of results. We're suggesting a couple nearby locations that you might be able to add to your search to get more local results. Here we are using the geolocation coordinates provided by your web browser to find related geographic catalog terms.">Topics by Location</summary>
         <p id="message" style="display:none"><img alt="loading" src="./meta/img/loading.gif" id="loading" /> Waiting for Godot...</p>
         <p id="terms" class="terms"> </p>
-      <script id="worker" type="text/javascript">
-        var msg = document.getElementById("message");
-        if (navigator.geolocation) {
-          //show loading message
-          msg.style.display = 'block';
-          navigator.geolocation.getCurrentPosition(addScript);
-          console.log('geolocation done');
-        } else {
-          //error with geolocation
-          alert('Error: Your browser doesn\'t support geolocation.');
-        }
+<script id="worker" type="text/javascript">
+const msg = document.getElementById("message");
+if (navigator.geolocation) {
+  //show loading message
+  msg.style.display = 'block';
+  navigator.geolocation.getCurrentPosition(showTerms);
+  console.log('geolocation done');
+} else {
+  //error with geolocation
+  alert('Error: Your browser doesn\'t support geolocation.');
+}
 
-        function addScript(position) {
-          //set latitude and longitude values
-          var lat = parseFloat(position.coords.latitude);
-          var lon = parseFloat(position.coords.longitude);
-          var jsonp = document.createElement('script');
-          jsonp.type = 'text/javascript';
-          jsonp.async = true;
-          jsonp.src = "https://experimental.worldcat.org/mapfast/services?geo=" + lat + "," + lon + ";crs=wgs84&radius=100000&mq=&sortby=distance&max-results=15&callback=showSubjects";
-          //document.querySelector('.terms').appendChild(script);
-          var script = document.getElementsByTagName('script')[0];
-          script.parentNode.insertBefore(jsonp, script);        
-        }
+function showTerms({coords}) {
+  const lat = parseFloat(coords.latitude);
+  const lon = parseFloat(coords.longitude);
+  const coordinates = `${lat}|${lon}`;
+  //console.log(coordinates);
 
-        function showSubjects(data) {
-          //hide loading message
-          msg.style.display = 'none';
-          var container = document.getElementById("terms");
-          var markup = '<span>';
-          //var url = "http://www.worldcat.org/search?q=su:" + term + "&qt=advanced";
-          var url = "./index.html?&q=";
-          var i = -1;
-          var length = data.Placemark.length;
-            while (++i < length) {          
-            //for (var i = 0; i < length; i++) {
-              var cleanTerm = data.Placemark[i].name.replace(/ -- /g, " ");
-              markup += '<a title="' + data.Placemark[i].name + '" href="' + url + cleanTerm + '">' + data.Placemark[i].name + '</a>';
-            }       
-            container.innerHTML = markup + '</span> ';
-        }               
-      </script>
+  let url = "https://en.wikipedia.org/w/api.php";
+
+  const params = {
+    action: "query",
+    list: "geosearch",
+    gscoord: coordinates,
+    gsradius: "10000",
+    gslimit: "25",
+    format: "json"
+  };
+
+  url = `${url}?origin=*`;
+  Object.keys(params).forEach(key => {
+    url += `&${key}=${params[key]}`;
+  });
+  //console.log(url);
+
+  fetch(url)
+    .then(response => response.json())
+    .then(({query}) => {
+      //hide loading message
+      msg.style.display = 'none';
+      const container = document.getElementById("terms");
+      let markup = '<span>';
+      const url = "http://www.worldcat.org/search?q=su:";
+      //const url = "./index.html?&q=";
+      const pages = query.geosearch;
+      for (const page in pages) {
+        //console.log(`Title: ${pages[page].title}`);
+        markup += `<a title="${pages[page].title}" href="${url}${pages[page].title}">${pages[page].title}</a>`;
+      }
+      container.innerHTML = `${markup}</span> `;
+    })
+    .catch(error => {
+      console.log(error);
+    });
+}
+</script>
       </details>
 <!--       <details class="hidden facet-many">
       <summary>Popular</summary>
