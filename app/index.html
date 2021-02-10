@@ -127,7 +127,7 @@ function showTerms({coords}) {
   const coordinates = `${lat}|${lon}`;
   //console.log(coordinates);
 
-  let url = "https://en.wikipedia.org/w/api.php";
+  let api_url = 'https://en.wikipedia.org/w/api.php';
 
   const params = {
     action: "query",
@@ -138,27 +138,27 @@ function showTerms({coords}) {
     format: "json"
   };
 
-  url = `${url}?origin=*`;
+  api_url = `${api_url}?origin=*`;
   Object.keys(params).forEach(key => {
-    url += `&${key}=${params[key]}`;
+    api_url += `&${key}=${params[key]}`;
   });
   //console.log(url);
 
-  fetch(url)
+  fetch(api_url)
     .then(response => response.json())
     .then(({query}) => {
       //hide loading message
       msg.style.display = 'none';
       const container = document.getElementById("terms");
-      let markup = '<span>';
-      const url = "http://www.worldcat.org/search?q=su:";
-      //const url = "./index.html?&q=";
+      let markup = '';
+      const search_url = 'http://www.worldcat.org/search?q=su:';
+      //const search_url = './index.html?&q=';
       const pages = query.geosearch;
       for (const page in pages) {
         //console.log(`Title: ${pages[page].title}`);
-        markup += `<a title="${pages[page].title}" href="${url}${pages[page].title}">${pages[page].title}</a>`;
+	markup += `<span><a title="${pages[page].title}" href="${search_url}${pages[page].title}">${pages[page].title}</a></span>`;
       }
-      container.innerHTML = `${markup}</span> `;
+      container.innerHTML = `${markup}`;
     })
     .catch(error => {
       console.log(error);
