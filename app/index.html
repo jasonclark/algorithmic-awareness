@@ -156,7 +156,7 @@ function showTerms({coords}) {
       const pages = query.geosearch;
       for (const page in pages) {
         //console.log(`Title: ${pages[page].title}`);
-	markup += `<span><a title="${pages[page].title}" href="${search_url}${pages[page].title}">${pages[page].title}</a></span>`;
+	markup += `<a title="${pages[page].title}" href="${search_url}${pages[page].title}">${pages[page].title}</a>`;
       }
       container.innerHTML = `${markup}`;
     })
