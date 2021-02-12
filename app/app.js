@@ -18,7 +18,7 @@ function displaySearchResults() {
   
   // Show info about results
   const resultinfo = document.getElementById("result-info");
-  resultinfo.innerHTML = `<strong>${results.queries.request[0].searchTerms}</strong> (About ${results.queries.request[0].totalResults})`;
+  resultinfo.innerHTML = `Search for <em>${results.queries.request[0].searchTerms}</em> has about ${results.queries.request[0].totalResults} result(s)`;
   
   // Show current search category (facet)
   const sortcategory = document.getElementById("sort-category");
