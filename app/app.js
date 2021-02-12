@@ -206,6 +206,9 @@ function addInitialAnnotations() {
 document.querySelector("form").addEventListener("submit", e => {
   e.preventDefault();
   const q = document.getElementById("q").value;
+  const kbsearch = document.querySelector('#kbsearch');
+  kbsearch.setAttribute("href",`http://ask.lib.montana.edu/search/?q=${q}`);
+  history.pushState(null, null, `?q=${q}`);
   getSearchResults(q, 10, 1, null, null);
 });
 
