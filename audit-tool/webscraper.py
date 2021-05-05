@@ -283,7 +283,7 @@ for s in search:
         urls.append(tmp2)
 
     savePath = 'output/'+s+'/'
-    os.mkdir(savePath)
+    os.makedirs(savePath)
     csvf = savePath+s+'.csv'
     csvR = ['Title', 'Views', 'Creator', 'Verified_Creator', 'Likes', 'Dislikes', 'Likes (%)', 'Dislikes (%)', 'Description', 'Links', 'Capitals', 'Capitals (%)', 'Subs', 'Category', 'Family_Friendly', 'Publish_Date', 'Length', 'Tags', 'Recommended_List_Titles', 'Recommended_List_URLs']
     with io.open(csvf, 'a', encoding='utf-8') as csvfile:
