@@ -1,11 +1,17 @@
 #prototype script for listing Google Autosuggest phrases
 #inspired by https://importsem.com/query-google-suggestions-api-with-python/
+#TODO:
+#add headers to identify crawler
+#create output as structured data file
 
+import sys
 import requests
 import json
 from fake_useragent import UserAgent
 
-keyword = "man is"
+#Keyword to search, can be passed to script -> python audit-google-suugestions.py "ADD-KEYWORDS-HERE"
+keyword = sys.argv[1] if len(sys.argv) > 1 else 'man is'
+#keyword = "man is"
 keyword.replace(" ", "+")
 
 #client or output = What client to mask as (Firefox, Chrome, Toolbar). Determines the format of response. toolbar = XML. Firefox or Chrome = JSON.
