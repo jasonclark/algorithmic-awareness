@@ -4,17 +4,18 @@
 /* AUTHOR  */
   Web developer and designer: Jason A. Clark
   Site: www.jasonclark.info
-  Twitter: @jaclark
+  Bluesky: @jasonclark
+  ORCID: https://orcid.org/0000-0002-3588-6257
   Location: Bozeman, Montana, USA
 
 /* SITE */
   Language: English
-  Last update: 2016-10-12
+  Last update: 2026-10-11
   Doctype: HTML5
   Standards: HTML5, CSS3
   Components: CSS3, HTML5, Javascript, PHP, Python, Apache Server Configs, and CLI
   IDE: Vi
-  Source: https://github.com/jasonclark/search-ux
+  Source: https://github.com/jasonclark/algorithmic-awareness/tree/main/app
 
 /* THANKS */
   Mi familia!
