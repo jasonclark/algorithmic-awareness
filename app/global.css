@@ -64,6 +64,7 @@ input { border-radius: 4px; outline: none; }
 .results.none .results-returned { display: none; }
 .results.returned { display: block; }
 .results.returned .results-none { display: none; }
+.results,#message { display: none; }
 #facets .hidden { display: none; }
 #facets.naturallanguage > .facet-naturallanguage, #facets.many > .facet-many, #facets.none > .facet-none, #facets.categories > .facet-categories, #facets.offer > .facet-offer { display: block; }
 
